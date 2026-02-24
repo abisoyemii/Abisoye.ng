@@ -1,35 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Articles | Abisoye</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles | Abisoye - Frontend Developer</title>
+    <link rel="icon" type="image/jpeg" href="IMG_7384.JPG">
+    <link rel="stylesheet" href="articles.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
 
-  <header class="articles-header">
-    <h1>Articles</h1>
-    <p>Thoughts, tutorials, and lessons from my journey.</p>
-  </header>
+    <!-- Header -->
+    <header id="first-header">
+        <div class="container">
+            <a href="index.html" class="top-logo">Abisoye<span class="first-span">.ng</span></a>
 
-  <main class="articles-container">
+            <div class="desktop-menu">
+                <a class="links active" href="articles.html"><i class="ri-book-open-line"></i> Articles</a>
+                <a class="links" href="index.html#projects"><i class="ri-briefcase-line"></i> Projects</a>
+                <button class="first-button" onclick="location.href='index.html#contact'"><i class="ri-mail-line"></i> Contact</button>
+            </div>
 
-    <article class="article-card">
-      <h2>Building Responsive Websites</h2>
-      <p>What I’ve learned from real projects and practice.</p>
-      <a href="#">Read more</a>
-    </article>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
 
-    <article class="article-card">
-      <h2>My Journey into Software Development</h2>
-      <p>How I started and what I’m learning daily.</p>
-      <a href="#">Read more</a>
-    </article>
+    <!-- Mobile Menu -->
+    <div id="mobileMenu">
+        <div class="aos-top">
+            <p class="top-logo">Abisoye<span class="first-span">.ng</span></p>
+            <button class="close-menu" id="closeMenu">✕</button>
+        </div>
+        <p class="aos-desc">Explore articles, projects, and more about my work.</p>
+        <a class="links active" href="articles.html"><i class="ri-book-open-line"></i> Articles</a>
+        <a class="links" href="index.html#projects"><i class="ri-briefcase-line"></i> Projects</a>
+        <a class="links" href="#"><i class="ri-gamepad-line"></i> Season Game</a>
+        <button class="first-button" onclick="location.href='index.html#contact'"><i class="ri-mail-line"></i> Contact</button>
+    </div>
 
-  </main>
+    <!-- Hero Section -->
+    <section class="articles-hero">
+        <div class="hero-content" data-aos="fade-up">
+            <span class="hero-tag">Blog & Insights</span>
+            <h1>Articles & Tutorials</h1>
+            <p>Sharing my journey, lessons learned, and in-depth guides on frontend development, UI/UX design, and building scalable web applications.</p>
+            
+            <!-- Search & Filter -->
+            <div class="search-filter">
+                <div class="search-box">
+                    <i class="ri-search-line"></i>
+                    <input type="text" id="searchInput" placeholder="Search articles...">
+                </div>
+                <div class="filter-tags">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="react">React</button>
+                    <button class="filter-btn" data-filter="css">CSS</button>
+                    <button class="filter-btn" data-filter="javascript">JavaScript</button>
+                    <button class="filter-btn" data-filter="career">Career</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Featured Article -->
+    <section class="featured-article" data-aos="fade-up">
+        <div class="container-narrow">
+            <span class="section-label">Featured</span>
+            <article class="featured-card">
+                <div class="featured-image">
+                    <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80" alt="React Performance">
+                    <span class="featured-badge">Must Read</span>
+                </div>
+                <div class="featured-content">
+                    <div class="article-meta">
+                        <span class="category react">React</span>
+                        <span class="read-time"><i class="ri-time-line"></i> 12 min read</span>
+                        <span class="date">Jan 15, 2025</span>
+                    </div>
+                    <h2>Advanced React Performance Optimization Techniques Every Frontend Dev Should Know</h2>
+                    <p>Deep dive into React.memo, useMemo, useCallback, and the new React Compiler. Learn how to identify and fix performance bottlenecks in large-scale applications with real-world examples.</p>
+                    <div class="article-footer">
+                        <div class="author">
+                            <img src="./image/IMG_7384.JPG" alt="Abisoye">
+                            <span>Abisoye</span>
+                        </div>
+                        <a href="#" class="read-more">Read Article <i class="ri-arrow-right-line"></i></a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Articles Grid -->
+    <section class="articles-grid" id="articlesGrid">
+        <div class="container-narrow">
+            <div class="section-header">
+                <h3>Latest Articles</h3>
+                <div class="sort-dropdown">
+                    <select id="sortSelect">
+                        <option value="newest">Newest First</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="oldest">Oldest First</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="articles-list">
+                
+                <!-- Article 1 -->
+                <article class="article-card" data-category="css" data-aos="fade-up" data-aos-delay="0">
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=600&q=80" alt="CSS Grid">
+                    </div>
+                    <div class="article-body">
+                        <div class="article-meta">
+                            <span class="category css">CSS</span>
+                            <span class="read-time"><i class="ri-time-line"></i> 8 min</span>
+                        </div>
+                        <h4>Mastering CSS Grid: From Basics to Complex Layouts</h4>
+                        <p>A comprehensive guide to CSS Grid with practical examples, common patterns, and tips for responsive design.</p>
+                        <div class="article-footer">
+                            <span class="date">Jan 10, 2025</span>
+                            <a href="#" class="read-link">Read <i class="ri-arrow-right-up-line"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="article-card" data-category="javascript" data-aos="fade-up" data-aos-delay="100">
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?w=600&q=80" alt="JavaScript">
+                    </div>
+                    <div class="article-body">
+                        <div class="article-meta">
+                            <span class="category javascript">JavaScript</span>
+                            <span class="read-time"><i class="ri-time-line"></i> 15 min</span>
+                        </div>
+                        <h4>Understanding JavaScript Closures: A Visual Guide</h4>
+                        <p>Break down one of JavaScript's most confusing concepts with diagrams and practical use cases.</p>
+                        <div class="article-footer">
+                            <span class="date">Jan 5, 2025</span>
+                            <a href="#" class="read-link">Read <i class="ri-arrow-right-up-line"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="article-card" data-category="career" data-aos="fade-up" data-aos-delay="200">
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80" alt="Career">
+                    </div>
+                    <div class="article-body">
+                        <div class="article-meta">
+                            <span class="category career">Career</span>
+                            <span class="read-time"><i class="ri-time-line"></i> 6 min</span>
+                        </div>
+                        <h4>How I Landed My First Frontend Developer Job in 6 Months</h4>
+                        <p>My complete journey from learning to code to getting hired, including resources and mistakes to avoid.</p>
+                        <div class="article-footer">
+                            <span class="date">Dec 28, 2024</span>
+                            <a href="#" class="read-link">Read <i class="ri-arrow-right-up-line"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="article-card" data-category="react" data-aos="fade-up" data-aos-delay="0">
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=600&q=80" alt="React Hooks">
+                    </div>
+                    <div class="article-body">
+                        <div class="article-meta">
+                            <span class="category react">React</span>
+                            <span class="read-time"><i class="ri-time-line"></i> 10 min</span>
+                        </div>
+                        <h4>Custom Hooks: Building Reusable Logic in React</h4>
+                        <p>Learn how to extract component logic into reusable hooks with 5 practical examples you'll use daily.</p>
+                        <div class="article-footer">
+                            <span class="date">Dec 20, 2024</span>
+                            <a href="#" class="read-link">Read <i class="ri-arrow-right-up-line"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 5 -->
+                <article class="article-card" data-category="css" data-aos="fade-up" data-aos-delay="100">
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80" alt="Animations">
+                    </div>
+                    <div class="article-body">
+                        <div class="article-meta">
+                            <span class="category css">CSS</span>
+                            <span class="read-time"><i class="ri-time-line"></i> 7 min</span>
+                        </div>
+                        <h4>Creating Smooth CSS Animations Without JavaScript</h4>
+                        <p>Performance-friendly animation techniques using only CSS transforms and opacity.</p>
+                        <div class="article-footer">
+                            <span class="date">Dec 15, 2024</span>
+                            <a href="#" class="read-link">Read <i class="ri-arrow-right-up-line"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 6 -->
+                <article class="article-card" data-category="javascript" data-aos="fade-up" data-aos-delay="200">
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=600&q=80" alt="Async JS">
+                    </div>
+                    <div class="article-body">
+                        <div class="article-meta">
+                            <span class="category javascript">JavaScript</span>
+                            <span class="read-time"><i class="ri-time-line"></i> 11 min</span>
+                        </div>
+                        <h4>Async/Await Patterns: Writing Clean Asynchronous Code</h4>
+                        <p>Best practices for handling promises, error handling, and avoiding callback hell.</p>
+                        <div class="article-footer">
+                            <span class="date">Dec 10, 2024</span>
+                            <a href="#" class="read-link">Read <i class="ri-arrow-right-up-line"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- Load More -->
+            <div class="load-more">
+                <button class="load-btn" id="loadMoreBtn">
+                    <span>Load More Articles</span>
+                    <i class="ri-loader-2-line spin"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter" data-aos="fade-up">
+        <div class="container-narrow">
+            <div class="newsletter-box">
+                <div class="newsletter-content">
+                    <h3>Stay Updated</h3>
+                    <p>Get the latest articles, tutorials, and frontend tips delivered straight to your inbox. No spam, unsubscribe anytime.</p>
+                </div>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-profile">
+                <img src="image/IMG_7384.JPG"  class="footer-avatar" />
+                <p class="footer-text">
+                    Launch fully functional custom software or AI agents in under 5 weeks.
+                    Nigeria's top-rated developer for fast, scalable, SEO-ready solutions.
+                </p>
+            </div>
+            <nav class="footer-nav">
+                <a href="index.html">Home</a>
+                <a href="articles.html">Articles</a>
+                <a href="index.html#projects">Projects</a>
+            </nav>
+        </div>
+        <hr class="footer-line" />
+        <div class="footer-bottom">
+            <div class="footer-socials">
+                <a href="https://github.com/abisoyemii"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="footer-copy">© abisoye.ng. All rights reserved. 2023–2025.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="articles.js"></script>
 </body>
 </html>

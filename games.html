@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Season Game | Abisoye - Frontend Developer</title>
+    <link rel="icon" type="image/jpeg" href="IMG_7384.JPG">
+    <link rel="stylesheet" href="games.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="first-header">
+        <div class="container">
+            <a href="index.html" class="top-logo">Abisoye<span class="first-span">.ng</span></a>
+
+            <div class="desktop-menu">
+                <a class="links" href="articles.html"><i class="ri-book-open-line"></i> Articles</a>
+                <a class="links" href="index.html#projects"><i class="ri-briefcase-line"></i> Projects</a>
+                <a class="links active" href="season-game.html"><i class="ri-gamepad-line"></i> Season Game</a>
+                <button class="first-button" onclick="location.href='index.html#contact'"><i class="ri-mail-line"></i> Contact</button>
+            </div>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu">
+        <div class="aos-top">
+            <p class="top-logo">Abisoye<span class="first-span">.ng</span></p>
+            <button class="close-menu" id="closeMenu">✕</button>
+        </div>
+        <p class="aos-desc">Explore articles, projects, and more about my work.</p>
+        <a class="links" href="articles.html"><i class="ri-book-open-line"></i> Articles</a>
+        <a class="links" href="index.html#projects"><i class="ri-briefcase-line"></i> Projects</a>
+        <a class="links active" href="season-game.html"><i class="ri-gamepad-line"></i> Season Game</a>
+        <button class="first-button" onclick="location.href='index.html#contact'"><i class="ri-mail-line"></i> Contact</button>
+    </div>
+
+    <!-- Game Hero -->
+    <section class="game-hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content" data-aos="fade-up">
+            <div class="game-badge">
+                <i class="ri-flashlight-fill"></i>
+                <span>Interactive Experience</span>
+            </div>
+            <h1>The Season Game</h1>
+            <p class="hero-subtitle">Test your reflexes, strategy, and speed in this browser-based arcade challenge. Built with pure JavaScript, no frameworks.</p>
+            
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-num" id="totalPlayers">2,847</span>
+                    <span class="stat-label">Players</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num" id="highScore">9,999</span>
+                    <span class="stat-label">High Score</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num">4.9</span>
+                    <span class="stat-label">Rating</span>
+                </div>
+            </div>
+
+            <button class="play-btn" onclick="scrollToGame()">
+                <i class="ri-play-fill"></i>
+                Play Now
+            </button>
+        </div>
+        
+        <div class="floating-elements">
+            <div class="float-item" style="--delay: 0s; --x: 10%; --y: 20%;">🍂</div>
+            <div class="float-item" style="--delay: 1s; --x: 80%; --y: 30%;">❄️</div>
+            <div class="float-item" style="--delay: 2s; --x: 20%; --y: 70%;">🌸</div>
+            <div class="float-item" style="--delay: 3s; --x: 70%; --y: 80%;">☀️</div>
+        </div>
+    </section>
+
+    <!-- Game Container -->
+    <section class="game-section" id="gameSection">
+        <div class="container-narrow">
+            
+            <!-- Game UI -->
+            <div class="game-wrapper" data-aos="zoom-in">
+                <div class="game-header">
+                    <div class="season-indicator" id="seasonIndicator">
+                        <span class="season-icon">🌸</span>
+                        <span class="season-name">Spring</span>
+                    </div>
+                    <div class="game-stats">
+                        <div class="stat-box">
+                            <span class="label">Score</span>
+                            <span class="value" id="scoreDisplay">0</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="label">Level</span>
+                            <span class="value" id="levelDisplay">1</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="label">Lives</span>
+                            <span class="value" id="livesDisplay">❤️❤️❤️</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Canvas -->
+                <canvas id="gameCanvas" width="800" height="500"></canvas>
+
+                <!-- Game Overlays -->
+                <div class="game-overlay" id="startOverlay">
+                    <div class="overlay-content">
+                        <h2>Ready to Play?</h2>
+                        <p>Catch falling season items before they hit the ground. Avoid the wrong season items!</p>
+                        <div class="controls-hint">
+                            <div class="key"><span>←</span><span>→</span></div>
+                            <span>or drag to move</span>
+                        </div>
+                        <button class="start-btn" id="startBtn">
+                            <i class="ri-play-fill"></i>
+                            Start Game
+                        </button>
+                    </div>
+                </div>
+
+                <div class="game-overlay hidden" id="gameOverOverlay">
+                    <div class="overlay-content">
+                        <h2>Game Over!</h2>
+                        <div class="final-score">
+                            <span class="label">Final Score</span>
+                            <span class="score" id="finalScore">0</span>
+                        </div>
+                        <div class="high-score-display">
+                            <i class="ri-trophy-fill"></i>
+                            <span>High Score: <b id="highScoreDisplay">0</b></span>
+                        </div>
+                        <button class="restart-btn" id="restartBtn">
+                            <i class="ri-restart-line"></i>
+                            Play Again
+                        </button>
+                    </div>
+                </div>
+
+                <div class="game-overlay hidden" id="pauseOverlay">
+                    <div class="overlay-content">
+                        <h2>Paused</h2>
+                        <button class="resume-btn" id="resumeBtn">
+                            <i class="ri-play-fill"></i>
+                            Resume
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Controls -->
+            <div class="game-controls" data-aos="fade-up">
+                <button class="control-btn" id="pauseBtn">
+                    <i class="ri-pause-fill"></i>
+                    Pause
+                </button>
+                <button class="control-btn" id="soundBtn">
+                    <i class="ri-volume-up-fill"></i>
+                    Sound On
+                </button>
+                <button class="control-btn" id="fullscreenBtn">
+                    <i class="ri-fullscreen-fill"></i>
+                    Fullscreen
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- How to Play -->
+    <section class="how-to-play" data-aos="fade-up">
+        <div class="container-narrow">
+            <h2 class="section-title">How to Play</h2>
+            
+            <div class="rules-grid">
+                <div class="rule-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="rule-icon spring">🌸</div>
+                    <h3>Spring Season</h3>
+                    <p>Catch flowers and butterflies. Avoid snowflakes and falling leaves.</p>
+                    <div class="points">+10 points each</div>
+                </div>
+                
+                <div class="rule-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="rule-icon summer">☀️</div>
+                    <h3>Summer Season</h3>
+                    <p>Catch suns and ice creams. Avoid raindrops and snow.</p>
+                    <div class="points">+15 points each</div>
+                </div>
+                
+                <div class="rule-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="rule-icon autumn">🍂</div>
+                    <h3>Autumn Season</h3>
+                    <p>Catch leaves and pumpkins. Avoid suns and flowers.</p>
+                    <div class="points">+20 points each</div>
+                </div>
+                
+                <div class="rule-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="rule-icon winter">❄️</div>
+                    <h3>Winter Season</h3>
+                    <p>Catch snowflakes and mittens. Avoid suns and butterflies.</p>
+                    <div class="points">+25 points each</div>
+                </div>
+            </div>
+
+            <div class="power-ups" data-aos="fade-up">
+                <h3>Power-ups</h3>
+                <div class="power-grid">
+                    <div class="power-item">
+                        <span class="power-emoji">⚡</span>
+                        <span class="power-name">Speed Boost</span>
+                        <span class="power-desc">Move faster for 10 seconds</span>
+                    </div>
+                    <div class="power-item">
+                        <span class="power-emoji">🛡️</span>
+                        <span class="power-name">Shield</span>
+                        <span class="power-desc">Protection from wrong items</span>
+                    </div>
+                    <div class="power-item">
+                        <span class="power-emoji">2️⃣</span>
+                        <span class="power-name">Double Points</span>
+                        <span class="power-desc">2x score multiplier</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaderboard -->
+    <section class="leaderboard" data-aos="fade-up">
+        <div class="container-narrow">
+            <div class="leaderboard-header">
+                <h2 class="section-title">🏆 Leaderboard</h2>
+                <div class="period-tabs">
+                    <button class="tab-btn active" data-period="today">Today</button>
+                    <button class="tab-btn" data-period="week">This Week</button>
+                    <button class="tab-btn" data-period="all">All Time</button>
+                </div>
+            </div>
+
+            <div class="leaderboard-table">
+                <div class="table-header">
+                    <span>Rank</span>
+                    <span>Player</span>
+                    <span>Score</span>
+                    <span>Date</span>
+                </div>
+                <div class="table-body" id="leaderboardBody">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="tech-stack" data-aos="fade-up">
+        <div class="container-narrow">
+            <h2 class="section-title">Built With</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <i class="fab fa-js-square"></i>
+                    <span>Vanilla JavaScript</span>
+                </div>
+                <div class="tech-item">
+                    <i class="fab fa-html5"></i>
+                    <span>HTML5 Canvas</span>
+                </div>
+                <div class="tech-item">
+                    <i class="fab fa-css3-alt"></i>
+                    <span>CSS3 Animations</span>
+                </div>
+                <div class="tech-item">
+                    <i class="ri-gamepad-line"></i>
+                    <span>Game Loop API</span>
+                </div>
+            </div>
+            <p class="tech-desc">No frameworks, no libraries. Just pure code and passion for performance.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-profile">
+                <img src="./image/IMG_7384.JPG" alt="Profile" class="footer-avatar" />
+                <p class="footer-text">
+                    Launch fully functional custom software or AI agents in under 5 weeks.
+                    Nigeria's top-rated developer for fast, scalable, SEO-ready solutions.
+                </p>
+            </div>
+            <nav class="footer-nav">
+                <a href="index.html">Home</a>
+                <a href="articles.html">Articles</a>
+                <a href="index.html#projects">Projects</a>
+            </nav>
+        </div>
+        <hr class="footer-line" />
+        <div class="footer-bottom">
+            <div class="footer-socials">
+                <a href="https://github.com/abisoyemii"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="footer-copy">© abisoye.ng. All rights reserved. 2023–2025.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="games.js"></script>
+</body>
+</html>
