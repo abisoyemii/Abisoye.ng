@@ -7,9 +7,7 @@
        <link rel="icon" type="image/jpeg" href="IMG_7384.JPG">
 <link rel="stylesheet" href="style.css?v=2">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 
@@ -21,8 +19,7 @@
 
 <header id="first-header">
   <div class="container">
-    <p class="top-logo">Abisoye<span class="first-span">.ng</span></p>
-
+<p class="top-logo"><span style="color: #8bd417;">Abisoye</span>.ng</p>
     <div class="desktop-menu">
         <a class="links" href="articles.html"><i class="ri-book-open-line"></i> Articles</a>
         <a class="links" href="#projects"><i class="ri-briefcase-line"></i> Projects</a>
@@ -40,8 +37,7 @@
 
 <div class="aos" id="mobileMenu">
     <div class="aos-top">
-        <p class="top-logo">Abisoye<span class="first-span">.ng</span></p>
-        <button class="close-menu" id="closeMenu">✕</button>
+<p class="top-logo"><span class="first-span">Abisoye</span>.ng</p>        <button class="close-menu" id="closeMenu">✕</button>
     </div>
 
     <p class="aos-desc">Explore articles, projects, and more about my work.</p>
@@ -85,50 +81,226 @@
          </aside>
          
          <div class="main">
-         <form id="contactForm" class="form-row">
-        
-        <div class="row-top">
-            <div class="form-group">
-                <label for="fullname">Full Name</label>
-                <input id="fullname" type="text" placeholder="Enter your full name" required />
+    <!-- Project Builder Container -->
+    <div class="project-builder">
+        <div class="builder-header">
+            <h2><i class="ri-rocket-line"></i> Start Your Project</h2>
+            <p>Answer a few questions and get an instant timeline estimate</p>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+                <div class="step-indicator active" data-step="1">1</div>
+                <div class="step-indicator" data-step="2">2</div>
+                <div class="step-indicator" data-step="3">3</div>
+                <div class="step-indicator" data-step="4">4</div>
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input id="email" type="email" placeholder="example@email.com" required />
+        </div>
+
+        <div class="builder-body">
+            <!-- Step 1: Project Type -->
+            <div class="step active" data-step="1">
+                <h3>What are we building?</h3>
+                <p>Select the type of project you want to launch</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-value="mobile" onclick="selectOption(this, 'type')">
+                        <div class="option-icon">📱</div>
+                        <h4>Mobile App</h4>
+                        <p>Native iOS/Android or cross-platform Flutter/React Native app</p>
+                    </div>
+                    
+                    <div class="option-card" data-value="website" onclick="selectOption(this, 'type')">
+                        <div class="option-icon">🌐</div>
+                        <h4>Website</h4>
+                        <p>Marketing site, web app, or e-commerce platform</p>
+                    </div>
+                    
+                    <div class="option-card" data-value="ai-agent" onclick="selectOption(this, 'type')">
+                        <div class="option-icon">🤖</div>
+                        <h4>AI Agent</h4>
+                        <p>WhatsApp/Telegram bots or custom AI automation</p>
+                    </div>
+                    
+                    <div class="option-card" data-value="custom" onclick="selectOption(this, 'type')">
+                        <div class="option-icon">⚡</div>
+                        <h4>Custom Solution</h4>
+                        <p>Complex system, dashboard, or unique requirements</p>
+                    </div>
+                </div>
+
+                <div class="live-preview">
+                    <h4><i class="ri-time-line"></i> Live Estimate</h4>
+                    <div class="preview-item">
+                        <span class="preview-label">Project Type</span>
+                        <span class="preview-value" id="previewType">Not selected</span>
+                    </div>
+                    <div class="preview-timeline">
+                        Estimated delivery: <strong id="timelineEstimate">6-8 weeks</strong>
+                    </div>
+                </div>
             </div>
-         </div>
 
-        
-         <div class="form-group">
-            <label for="overview">Brief Overview</label>
-            <textarea id="overview" placeholder="Tell us about your project..." required></textarea>
-         </div>
-         </form>
-         <p class="quick">
-         Quick start with a template:
-         </p>
+            <!-- Step 2: Stage -->
+            <div class="step" data-step="2">
+                <h3>What's your current stage?</h3>
+                <p>This helps us understand where you need the most support</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-value="idea" onclick="selectOption(this, 'stage')">
+                        <div class="option-icon">💡</div>
+                        <h4>Just an Idea</h4>
+                        <p>I have a concept but need help with validation and planning</p>
+                    </div>
+                    
+                    <div class="option-card" data-value="designs" onclick="selectOption(this, 'stage')">
+                        <div class="option-icon">🎨</div>
+                        <h4>Designs Ready</h4>
+                        <p>I have Figma/Sketch files and need development</p>
+                    </div>
+                    
+                    <div class="option-card" data-value="mvp" onclick="selectOption(this, 'stage')">
+                        <div class="option-icon">🚀</div>
+                        <h4>Existing MVP</h4>
+                        <p>I have a product that needs scaling or new features</p>
+                    </div>
+                </div>
 
-         <div class="right-but">
-            <button class="button3">
-            <i class="ri-smartphone-line"></i>
-            Mobile app
-         </button>
-         <button class="button4">
-            <i class="ri-global-line"></i>
-            Website
-         </button>
-         <button class="button5">
-            <i class="ri-lightbulb-flash-line"></i>
-            Custom Project
-         </button>
-         </div>
-         <button class="send-button">
-            Send
-         </button>
-     
+                <div class="live-preview">
+                    <h4><i class="ri-time-line"></i> Live Estimate</h4>
+                    <div class="preview-item">
+                        <span class="preview-label">Starting Point</span>
+                        <span class="preview-value" id="previewStage">Not selected</span>
+                    </div>
+                    <div class="preview-timeline">
+                        Typical timeline from this stage: <strong id="stageTimeline">6-8 weeks</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Timeline & Budget -->
+            <div class="step" data-step="3">
+                <h3>Timeline & Investment</h3>
+                <p>Set your expectations so we can plan accordingly</p>
+                
+                <div class="input-group">
+                    <label>How urgent is this?</label>
+                    <div class="options-grid urgency-grid">
+                        <div class="option-card" data-value="asap" onclick="selectOption(this, 'urgency')">
+                            <h4>ASAP</h4>
+                            <p>Rush delivery</p>
+                        </div>
+                        <div class="option-card selected" data-value="standard" onclick="selectOption(this, 'urgency')">
+                            <h4>Standard</h4>
+                            <p>6-8 weeks</p>
+                        </div>
+                        <div class="option-card" data-value="flexible" onclick="selectOption(this, 'urgency')">
+                            <h4>Flexible</h4>
+                            <p>No rush</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="range-container">
+                    <div class="range-labels">
+                        <span>Expected Investment</span>
+                        <span class="range-value" id="budgetValue">$5,000 - $10,000</span>
+                    </div>
+                    <input type="range" id="budgetRange" min="1" max="5" value="2" oninput="updateBudget(this.value)">
+                    <div class="range-labels range-steps">
+                        <span>$200+</span>
+                        <span>$300+</span>
+                        <span>$500+</span>
+                        <span>$550+</span>
+                        <span>$600+</span>
+                    </div>
+                </div>
+
+                <div class="live-preview">
+                    <h4><i class="ri-time-line"></i> Live Estimate</h4>
+                    <div class="preview-item">
+                        <span class="preview-label">Priority</span>
+                        <span class="preview-value" id="previewUrgency">Standard</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">Budget Range</span>
+                        <span class="preview-value" id="previewBudget">$5,000 - $10,000</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Contact -->
+            <div class="step" data-step="4">
+                <h3>Almost there!</h3>
+                <p>Tell us about your project and how to reach you</p>
+                
+                <div class="input-group">
+                    <label for="projectName">Project Name (Optional)</label>
+                    <input type="text" id="projectName" placeholder="e.g., SwiftPay App">
+                </div>
+                
+                <div class="input-group">
+                    <label for="projectDesc">Brief Overview *</label>
+                    <textarea id="projectDesc" placeholder="Describe your project, goals, and any specific requirements..." required></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="userName">Your Name *</label>
+                        <input type="text" id="userName" placeholder="John Doe" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="userEmail">Email Address *</label>
+                        <input type="email" id="userEmail" placeholder="john@example.com" required>
+                    </div>
+                </div>
+
+                <div class="live-preview summary-preview">
+                    <h4><i class="ri-check-line"></i> Project Summary</h4>
+                    <div class="preview-item">
+                        <span class="preview-label">Deliverable</span>
+                        <span class="preview-value" id="finalType">-</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">Start Date</span>
+                        <span class="preview-value" id="finalStage">-</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">Est. Delivery</span>
+                        <span class="preview-value highlight" id="finalTimeline">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success Step -->
+            <div class="step success-step" data-step="5">
+                <div class="success-icon">🎉</div>
+                <h3>Project Brief Received!</h3>
+                <p>I've received your project details and will review them within 24 hours. Expect a detailed proposal in your inbox.</p>
+                
+                <div class="contact-options">
+                    <a href="#" class="contact-btn whatsapp" onclick="openWhatsApp()">
+                        <i class="ri-whatsapp-line"></i>
+                        Chat on WhatsApp
+                    </a>
+                    <a href="mailto:hello@abisoye.ng" class="contact-btn">
+                        <i class="ri-mail-line"></i>
+                        Send Email
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="builder-footer" id="builderFooter">
+            <button class="btn btn-secondary" id="prevBtn" onclick="changeStep(-1)">
+                <i class="ri-arrow-left-line"></i> Back
+            </button>
+            <button class="btn btn-primary" id="nextBtn" onclick="changeStep(1)" disabled>
+                Continue <i class="ri-arrow-right-line"></i>
+            </button>
+        </div>
+    </div>
 </div>
 </div>
-
 
         
         

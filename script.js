@@ -481,3 +481,274 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error('❌ Error initializing modules:', error);
   }
 });
+
+
+
+// ============================================
+// PROJECT BUILDER LOGIC
+// ============================================
+
+let currentStep = 1;
+const totalSteps = 4;
+
+const projectData = {
+    type: null,
+    typeLabel: '',
+    stage: null,
+    stageLabel: '',
+    urgency: 'standard',
+    urgencyLabel: 'Standard',
+    budget: '$5,000 - $10,000',
+    projectName: '',
+    description: '',
+    name: '',
+    email: ''
+};
+
+const budgetRanges = {
+    1: '$200 - $300',
+    2: '$400 - $500',
+    3: '$600 - $700',
+    4: '$800 - $900',
+    5: '$1,200+'
+};
+
+const timelines = {
+    mobile: '8-10 weeks',
+    website: '4-6 weeks',
+    'ai-agent': '3-5 weeks',
+    custom: '6-12 weeks'
+};
+
+const stageTimelines = {
+    idea: '8-10 weeks',
+    designs: '6-8 weeks',
+    mvp: '4-6 weeks'
+};
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.querySelector('.project-builder')) {
+        updateProgress();
+        updateButtons();
+        
+        // Add input listeners
+        ['projectDesc', 'userName', 'userEmail'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', checkCanProceed);
+        });
+    }
+});
+
+function selectOption(element, category) {
+    const parent = element.parentElement;
+    parent.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+    element.classList.add('selected');
+    
+    const value = element.getAttribute('data-value');
+    const label = element.querySelector('h4').textContent;
+    
+    if (category === 'type') {
+        projectData.type = value;
+        projectData.typeLabel = label;
+        document.getElementById('previewType').textContent = label;
+        document.getElementById('timelineEstimate').textContent = timelines[value] || '6-8 weeks';
+    } else if (category === 'stage') {
+        projectData.stage = value;
+        projectData.stageLabel = label;
+        document.getElementById('previewStage').textContent = label;
+        document.getElementById('stageTimeline').textContent = stageTimelines[value] || '6-8 weeks';
+    } else if (category === 'urgency') {
+        projectData.urgency = value;
+        projectData.urgencyLabel = label;
+        document.getElementById('previewUrgency').textContent = label;
+    }
+    
+    checkCanProceed();
+}
+
+function updateBudget(value) {
+    projectData.budget = budgetRanges[value];
+    document.getElementById('budgetValue').textContent = projectData.budget;
+    document.getElementById('previewBudget').textContent = projectData.budget;
+}
+
+function checkCanProceed() {
+    const nextBtn = document.getElementById('nextBtn');
+    let canProceed = false;
+    
+    if (currentStep === 1) canProceed = !!projectData.type;
+    else if (currentStep === 2) canProceed = !!projectData.stage;
+    else if (currentStep === 3) canProceed = true;
+    else if (currentStep === 4) {
+        const desc = document.getElementById('projectDesc')?.value.trim();
+        const name = document.getElementById('userName')?.value.trim();
+        const email = document.getElementById('userEmail')?.value.trim();
+        canProceed = !!(desc && name && email);
+    }
+    
+    if (nextBtn) nextBtn.disabled = !canProceed;
+}
+
+function changeStep(direction) {
+    if (direction === 1 && currentStep === 4) {
+        submitToFormspree();
+        return;
+    }
+    
+    const newStep = currentStep + direction;
+    if (newStep < 1 || newStep > 4) return;
+    
+    document.querySelector(`.step[data-step="${currentStep}"]`)?.classList.remove('active');
+    currentStep = newStep;
+    document.querySelector(`.step[data-step="${currentStep}"]`)?.classList.add('active');
+    
+    updateProgress();
+    updateButtons();
+    
+    if (currentStep === 4) updateFinalSummary();
+}
+
+function updateProgress() {
+    const progress = ((currentStep - 1) / 3) * 100;
+    const fill = document.getElementById('progressFill');
+    if (fill) fill.style.width = progress + '%';
+    
+    document.querySelectorAll('.step-indicator').forEach((indicator, index) => {
+        const stepNum = index + 1;
+        indicator.classList.remove('active', 'completed');
+        
+        if (stepNum === currentStep) {
+            indicator.classList.add('active');
+        } else if (stepNum < currentStep) {
+            indicator.classList.add('completed');
+            indicator.innerHTML = '✓';
+        } else {
+            indicator.textContent = stepNum;
+        }
+    });
+}
+
+function updateButtons() {
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    if (prevBtn) prevBtn.style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+    
+    if (nextBtn) {
+        if (currentStep === 4) {
+            nextBtn.innerHTML = 'Send <i class="ri-send-plane-line"></i>';
+        } else {
+            nextBtn.innerHTML = 'Continue <i class="ri-arrow-right-line"></i>';
+        }
+    }
+    
+    checkCanProceed();
+}
+
+function updateFinalSummary() {
+    document.getElementById('finalType').textContent = projectData.typeLabel || '-';
+    document.getElementById('finalStage').textContent = projectData.stageLabel || '-';
+    
+    const baseWeeks = projectData.type === 'mobile' || projectData.type === 'custom' ? 9 : 5;
+    const multiplier = {asap: 0.7, standard: 1, flexible: 1.2}[projectData.urgency] || 1;
+    const totalWeeks = Math.round(baseWeeks * multiplier);
+    
+    const deliveryDate = new Date();
+    deliveryDate.setDate(deliveryDate.getDate() + (totalWeeks * 7));
+    document.getElementById('finalTimeline').textContent = deliveryDate.toLocaleDateString('en-US', {month: 'short', year: 'numeric'});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ============================================
+// FORMSPREE SUBMISSION - THIS IS THE KEY FUNCTION
+// ============================================
+
+function submitToFormspree() {
+    // Get latest values
+    projectData.projectName = document.getElementById('projectName')?.value.trim() || '';
+    projectData.description = document.getElementById('projectDesc')?.value.trim() || '';
+    projectData.name = document.getElementById('userName')?.value.trim() || '';
+    projectData.email = document.getElementById('userEmail')?.value.trim() || '';
+    
+    console.log('Submitting to Formspree:', projectData);
+    
+    const btn = document.getElementById('nextBtn');
+    btn.innerHTML = 'Sending... <i class="ri-loader-4-line ri-spin"></i>';
+    btn.disabled = true;
+    
+    // YOUR FORMSPREE ID - MAKE SURE THIS IS CORRECT
+    const FORMSPREE_ID = 'b3f7f010cc18'; // Your ID from the screenshot
+    
+    fetch(`https://usebasin.com/f/b3f7f010cc18`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: projectData.name,
+            email: projectData.email,
+            project: projectData.projectName || 'Untitled Project',
+            type: projectData.typeLabel || 'Not selected',
+            stage: projectData.stageLabel || 'Not selected',
+            urgency: projectData.urgencyLabel || 'Standard',
+            budget: projectData.budget || '$5,000 - $10,000',
+            message: projectData.description,
+            _subject: `New Project: ${projectData.typeLabel || 'Unknown'} from ${projectData.name}`
+        })
+    })
+    .then(async response => {
+        console.log('Response status:', response.status);
+        
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Success:', data);
+            showSuccess();
+        } else {
+            const errorText = await response.text();
+            console.error('Error response:', errorText);
+            throw new Error('Failed to send');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to send. Please email me directly at hello@abisoye.ng');
+        btn.innerHTML = 'Send <i class="ri-send-plane-line"></i>';
+        btn.disabled = false;
+    });
+}
+
+function showSuccess() {
+    document.querySelector(`.step[data-step="4"]`)?.classList.remove('active');
+    document.querySelector('.step[data-step="5"]')?.classList.add('active');
+    
+    const footer = document.getElementById('builderFooter');
+    if (footer) footer.style.display = 'none';
+    
+    const progressBar = document.querySelector('.progress-bar');
+    if (progressBar) progressBar.style.opacity = '0';
+}
+
+function openWhatsApp() {
+    const phoneNumber = '2347031323048';
+    const text = `Hi Abisoye, I just submitted a project brief for ${projectData.typeLabel || 'a project'}. Looking forward to discussing! - ${projectData.name || 'A client'}`;
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`, '_blank');
+}
