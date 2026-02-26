@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "abisoyeng.vercel.app"
+        }
+      ],
+      "destination": "https://abisoye.ng/:match*",
+      "permanent": true
+    }
+  ]
+}
